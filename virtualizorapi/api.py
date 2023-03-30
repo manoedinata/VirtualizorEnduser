@@ -3,7 +3,7 @@ from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
 
 class Api(object):
-    def __init__(self, server_URL, api_key, api_password) -> None:
+    def __init__(self, server_URL: str, api_key: str, api_password: str) -> None:
         # Base URL
         self.BASE_URL = server_URL
 
@@ -22,7 +22,7 @@ class Api(object):
         }
 
 
-    def request(self, method: str, paramsDict: dict):
+    def request(self, method: str, paramsDict: dict, dataDict: dict):
         """
         Make a request to API
         Specifically for automatic parameters handle.
@@ -33,7 +33,7 @@ class Api(object):
         params = self.baseParams
         params.update(paramsDict)
 
-        req = self.session.request(method=method, url=self.BASE_URL, params=params)
+        req = self.session.request(method=method, url=self.BASE_URL, params=params, data=dataDict)
         return req.json()
 
 
@@ -84,6 +84,18 @@ class Api(object):
         
         return req
 
+    # Functions: List OS
+    def listOS(self, vps_id):
+        """
+        List available OSes for a specific VM.
+        """
+        req = self.request("GET", {
+            "act": "ostemplate",
+            "svs": int(vps_id),
+        })
+
+        return req["oslist"]["vzo"]
+
     # Functions: Restart VM
     def restartVM(self, vps_id):
         """
@@ -114,8 +126,9 @@ class Api(object):
         """
         Add a VDF for a specific VM.
         """
-        req = self.request("GET", {
+        req = self.request("POST", paramsDict={
             "act": "managevdf",
+        }, dataDict={
             "svs": int(vps_id),
             "vdf_action": "addvdf",
             "protocol": protocol,
