@@ -22,7 +22,7 @@ class Api(object):
         }
 
 
-    def request(self, method: str, paramsDict: dict, dataDict: dict = None):
+    def request(self, method: str, paramsDict: dict, dataDict: dict = {}) -> dict:
         """
         Make a request to API
         Specifically for automatic parameters handle.
@@ -32,9 +32,6 @@ class Api(object):
         """
         params = self.baseParams
         params.update(paramsDict)
-
-        if not dataDict:
-            dataDict = {}
 
         req = self.session.request(method=method, url=self.BASE_URL, params=params, data=dataDict)
         return req.json()
