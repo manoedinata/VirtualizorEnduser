@@ -1,2 +1,3 @@
 # VirtualizorEnduser-Python
-Virtualizor Endpoint API library, in Python.
+
+Just a Virtualizor Endpoint API wrapper, written in Python.
