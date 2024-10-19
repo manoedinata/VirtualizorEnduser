@@ -1,6 +1,7 @@
 from requests import Session
 from urllib3 import disable_warnings
 from urllib3.exceptions import InsecureRequestWarning
+import json
 
 class Api(object):
     def __init__(self, server_URL: str, api_key: str, api_password: str) -> None:
@@ -45,25 +46,29 @@ class Api(object):
         req = self.request("GET", {
             "act": "listvs"
         })
-        
-        return req
+
+        return req["vs"]
 
     # Functions: VM info
     def VMInfo(self, vps_id):
         """
         Get specific VM information.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "vpsmanage",
             "svs": int(vps_id)
         })
         
-        return req
+        return req["info"]
 
     # Functions: Start VM
     def StartVM(self, vps_id):
         """
         Start a specific VM.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "start",
@@ -76,6 +81,8 @@ class Api(object):
     def stopVM(self, vps_id):
         """
         Stop a specific VM.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "stop",
@@ -88,6 +95,8 @@ class Api(object):
     def listOS(self, vps_id):
         """
         List available OSes for a specific VM.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "ostemplate",
@@ -100,6 +109,8 @@ class Api(object):
     def restartVM(self, vps_id):
         """
         Restart a specific VM.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "restart",
@@ -113,18 +124,27 @@ class Api(object):
     def listVDF(self, vps_id):
         """
         List VDFs for a specific VM.
+
+        :param vps_id: VPS ID number
         """
         req = self.request("GET", {
             "act": "managevdf",
             "svs": int(vps_id),
         })
         
-        return req
+        return req["haproxydata"]
 
     # Functions: Add VDF
     def addVDF(self, vps_id, protocol, src_port, src_hostname, dest_ip, dest_port):
         """
         Add a VDF for a specific VM.
+
+        :param vps_id: VPS ID number
+        :param protocol: Domain Forwarding protocol
+        :param src_port: Source port (if using HTTP/HTTPS protocol, use 80/443)
+        :param src_hostname: Source domain, if using HTTP/HTTPS protocol
+        :param dest_ip: Destination IP
+        :param dest_port: Destination port (if using HTTP/HTTPS protocol, use 80/443)
         """
         req = self.request("POST", paramsDict={
             "act": "managevdf",
@@ -137,5 +157,8 @@ class Api(object):
             "dest_ip": dest_ip,
             "dest_port": dest_port,
         })
-        
-        return req
+
+        if "error" in req.keys():
+            return {"error": req["error"]}
+        else:
+            return req
