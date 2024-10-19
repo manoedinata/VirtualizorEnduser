@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="VirtualizorEndpoint",
-    version="0.4",
+    version="0.5",
     author="manoedinata",
     author_email="manoedinata@gmail.com",
     description="Virtualizor Endpoint API library, in Python.",

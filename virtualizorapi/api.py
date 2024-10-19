@@ -120,10 +120,10 @@ class Api(object):
         return req
 
 
-    # Functions: List VDF
-    def listVDF(self, vps_id):
+    # Private functions: Request List VDF
+    def __reqListVDF(self, vps_id):
         """
-        List VDFs for a specific VM.
+        HTTP Request of List VDFs for a specific VM.
 
         :param vps_id: VPS ID number
         """
@@ -132,7 +132,32 @@ class Api(object):
             "svs": int(vps_id),
         })
         
+        return req
+
+    # Functions: List VDF
+    def listVDF(self, vps_id):
+        """
+        List VDFs for a specific VM.
+
+        :param vps_id: VPS ID number
+        """
+        req = self.__reqListVDF(vps_id)
+
         return req["haproxydata"]
+
+    # Functions: Get VDF additional info
+    def getVDFInfo(self, vps_id):
+        """
+        Get VDF additional info.
+
+        :param vps_id: VPS ID number
+        """
+        req = self.__reqListVDF(vps_id)
+
+        return {
+            "supported_protocols": req["supported_protocols"],
+            "src_ips": req["arr_haproxy_src_ips"]
+        }
 
     # Functions: Add VDF
     def addVDF(self, vps_id, protocol, src_port, src_hostname, dest_ip, dest_port):
