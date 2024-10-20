@@ -156,7 +156,8 @@ class Api(object):
 
         return {
             "supported_protocols": req["supported_protocols"],
-            "src_ips": req["arr_haproxy_src_ips"]
+            "src_ips": req["arr_haproxy_src_ips"],
+            "dest_ips": list(req["vpses"][list(req["vpses"].keys())[0]]["ips"].keys())
         }
 
     # Functions: Add VDF
