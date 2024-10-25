@@ -22,6 +22,11 @@ class Api(object):
             "do": 1
         }
 
+        # Request status
+        self.error = False
+        self.error_code = ""
+        self.error_message = ""
+
 
     def request(self, method: str, paramsDict: dict, dataDict: dict = {}) -> dict:
         """
@@ -185,6 +190,14 @@ class Api(object):
         })
 
         if "error" in req.keys():
-            return {"error": req["error"]}
+            self.error = True
+            self.error_code = list(req["error"].keys())[0]
+            self.error_message = list(req["error"].values())[0]
+
+            return {
+                "error": req["error"],
+                "error_code": self.error_code,
+                "error_message": self.error_message
+            }
         else:
             return req
