@@ -1,3 +1,3 @@
-# VirtualizorEnduser-Python
+# VirtualizorEnduser
 
-Just a Virtualizor Endpoint API wrapper, written in Python.
+Just a Virtualizor Enduser API wrapper, written in Python.
