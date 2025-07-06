@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "virtualizorenduser"
-version = "0.6"
+version = "0.7"
 description = "Virtualizor Enduser API library, in Python."
 authors = ["Hendra Manudinata <manoedinata@gmail.com>"]
 readme = "README.md"
