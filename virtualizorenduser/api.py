@@ -28,7 +28,7 @@ class Api(object):
         self.error_message = ""
 
 
-    def request(self, method: str, paramsDict: dict, dataDict: dict = {}) -> dict:
+    def __request(self, method: str, paramsDict: dict, dataDict: dict = {}) -> dict:
         """
         Make a request to API
         Specifically for automatic parameters handle.
@@ -48,7 +48,7 @@ class Api(object):
         """
         List VMs in an account.
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "listvs"
         })
 
@@ -61,7 +61,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "vpsmanage",
             "svs": int(vps_id)
         })
@@ -75,7 +75,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "start",
             "svs": int(vps_id),
         })
@@ -89,7 +89,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "stop",
             "svs": int(vps_id),
         })
@@ -103,7 +103,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "ostemplate",
             "svs": int(vps_id),
         })
@@ -117,7 +117,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "restart",
             "svs": int(vps_id),
         })
@@ -132,7 +132,7 @@ class Api(object):
 
         :param vps_id: VPS ID number
         """
-        req = self.request("GET", {
+        req = self.__request("GET", {
             "act": "managevdf",
             "svs": int(vps_id),
         })
@@ -177,7 +177,7 @@ class Api(object):
         :param dest_ip: Destination IP
         :param dest_port: Destination port (if using HTTP/HTTPS protocol, use 80/443)
         """
-        req = self.request("POST", paramsDict={
+        req = self.__request("POST", paramsDict={
             "act": "managevdf",
         }, dataDict={
             "svs": int(vps_id),
