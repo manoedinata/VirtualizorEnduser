@@ -4,9 +4,9 @@ from urllib3.exceptions import InsecureRequestWarning
 import json
 
 class Api(object):
-    def __init__(self, server_URL: str, api_key: str, api_password: str) -> None:
+    def __init__(self, server_url: str, api_key: str, api_password: str) -> None:
         # Base URL
-        self.BASE_URL = server_URL
+        self.BASE_URL = server_url
 
         # Setup session
         self.session = Session()
